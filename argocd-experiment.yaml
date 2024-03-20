@@ -1,11 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argo-exp
+  name: nginx
 spec:
   destination:
-    name: 'argo-exp'
-    namespace: argo-exp
+    namespace: nginx
     server: 'https://kubernetes.default.svc'
   source:
     path: manifests/
@@ -33,13 +32,16 @@ metadata:
   name: apache
 spec:
   destination:
-    name: 'apache'
     namespace: apache
     server: 'https://kubernetes.default.svc'
   source:
     repoURL: 'https://charts.bitnami.com/bitnami'
     targetRevision: 11.0.0
     chart: apache
+    helm:
+      parameters:
+        - name: service.type
+          value: ClusterIP
   project: default
   syncPolicy:
     automated:
