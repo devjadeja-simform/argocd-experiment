@@ -56,3 +56,34 @@ spec:
         duration: 5s
         maxDuration: 3m0s
         factor: 2
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vault
+spec:
+  destination:
+    namespace: vault
+    server: 'https://kubernetes.default.svc'
+  source:
+    repoURL: 'https://helm.releases.hashicorp.com'
+    targetRevision: 0.27.0
+    chart: vault
+    # helm:
+    #   parameters:
+    #     - name: service.type
+    #       value: ClusterIP
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+    retry:
+      limit: 2
+      backoff:
+        duration: 5s
+        maxDuration: 3m0s
+        factor: 2
