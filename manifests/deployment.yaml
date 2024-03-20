@@ -18,7 +18,7 @@ spec:
         app: nginx
     spec:
       containers:
-      - image: nginx:alpine  # devjadejasimform/nginx-extra
+      - image: devjadejasimform/nginx-extra  # nginx:alpine
         name: nginx
         ports:
         - containerPort: 80
